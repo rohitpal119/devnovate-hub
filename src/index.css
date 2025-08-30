@@ -17,8 +17,9 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 220 85% 57%;
     --primary-foreground: 210 40% 98%;
+    --primary-hover: 220 85% 52%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -26,8 +27,20 @@ All colors MUST be HSL.
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 220 85% 57%;
+    --accent-foreground: 210 40% 98%;
+
+    --brand: 220 85% 57%;
+    --brand-light: 220 85% 95%;
+    --brand-dark: 220 85% 15%;
+
+    --hero-gradient: linear-gradient(135deg, hsl(220 85% 57%), hsl(260 85% 57%));
+    --card-gradient: linear-gradient(135deg, hsl(220 85% 98%), hsl(260 85% 98%));
+    
+    --shadow-elegant: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+    --shadow-brand: 0 10px 30px -5px hsl(220 85% 57% / 0.3);
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
