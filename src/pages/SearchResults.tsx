@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { BlogCard } from '@/components/BlogCard';
+import BlogCard from '@/components/BlogCard';
 import { Search, ArrowLeft } from 'lucide-react';
 
 interface Blog {
@@ -19,6 +19,7 @@ interface Blog {
   likes_count: number;
   comments_count: number;
   views_count: number;
+  created_at: string;
   published_at: string;
   profiles: {
     full_name: string;
