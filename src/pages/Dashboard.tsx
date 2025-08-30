@@ -150,7 +150,7 @@ export default function Dashboard() {
     return blogs.filter(blog => blog.status === status);
   };
 
-  const BlogCard = ({ blog }: { blog: DashboardBlog }) => (
+  const DashboardBlogCard = ({ blog }: { blog: DashboardBlog }) => (
     <Card className="hover:shadow-md transition-shadow">
       <CardContent className="p-6">
         <div className="flex items-start justify-between mb-4">
@@ -326,20 +326,20 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           ) : (
-            blogs.map(blog => <BlogCard key={blog.id} blog={blog} />)
+            blogs.map(blog => <DashboardBlogCard key={blog.id} blog={blog} />)
           )}
         </TabsContent>
 
         <TabsContent value="approved" className="space-y-4">
-          {filterBlogsByStatus('approved').map(blog => <BlogCard key={blog.id} blog={blog} />)}
+          {filterBlogsByStatus('approved').map(blog => <DashboardBlogCard key={blog.id} blog={blog} />)}
         </TabsContent>
 
         <TabsContent value="pending" className="space-y-4">
-          {filterBlogsByStatus('pending').map(blog => <BlogCard key={blog.id} blog={blog} />)}
+          {filterBlogsByStatus('pending').map(blog => <DashboardBlogCard key={blog.id} blog={blog} />)}
         </TabsContent>
 
         <TabsContent value="rejected" className="space-y-4">
-          {filterBlogsByStatus('rejected').map(blog => <BlogCard key={blog.id} blog={blog} />)}
+          {filterBlogsByStatus('rejected').map(blog => <DashboardBlogCard key={blog.id} blog={blog} />)}
         </TabsContent>
       </Tabs>
     </div>
