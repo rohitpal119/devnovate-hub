@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 interface BlogCardProps {
   blog: any;
-  onStatusUpdate: (blogId: string, status: string) => void;
+  onStatusUpdate?: (blogId: string, status: string) => void;
 }
 
 export default function BlogCard({ blog, onStatusUpdate }: BlogCardProps) {
@@ -55,6 +55,7 @@ export default function BlogCard({ blog, onStatusUpdate }: BlogCardProps) {
         </div>
 
         <div className="flex justify-between items-center">
+        {onStatusUpdate && (
           <div className="flex space-x-2">
             {blog.status === 'pending' && (
               <>
@@ -99,6 +100,7 @@ export default function BlogCard({ blog, onStatusUpdate }: BlogCardProps) {
               </Button>
             )}
           </div>
+        )}
           
           <div className="flex space-x-2">
             <Dialog>

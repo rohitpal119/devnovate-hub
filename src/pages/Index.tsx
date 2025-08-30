@@ -188,7 +188,7 @@ export default function Index() {
                 <div className="flex items-center justify-between mb-8">
                   <h2 className="text-3xl font-bold">Featured Article</h2>
                 </div>
-                <BlogCard blog={featuredBlog} variant="featured" />
+                <BlogCard blog={featuredBlog} />
               </section>
             )}
 
