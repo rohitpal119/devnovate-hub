@@ -6,8 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Checkbox } from '@/components/ui/checkbox';
-import { PenTool, Mail, Lock, User, Shield } from 'lucide-react';
+import { PenTool, Mail, Lock, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function Auth() {
@@ -49,7 +48,6 @@ export default function Auth() {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
     const fullName = formData.get('fullName') as string;
-    const isAdmin = formData.get('isAdmin') === 'on';
 
     if (password.length < 6) {
       toast({
@@ -61,7 +59,7 @@ export default function Auth() {
       return;
     }
 
-    const { error } = await signUp(email, password, fullName, isAdmin ? 'admin' : 'blogger');
+    const { error } = await signUp(email, password, fullName);
     
     if (error) {
       toast({
@@ -189,16 +187,6 @@ export default function Auth() {
                         required
                         minLength={6}
                       />
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg bg-muted/30">
-                    <Checkbox id="isAdmin" name="isAdmin" />
-                    <div className="flex items-center space-x-2">
-                      <Shield className="w-4 h-4 text-primary" />
-                      <Label htmlFor="isAdmin" className="text-sm font-medium">
-                        Sign up as Admin
-                      </Label>
                     </div>
                   </div>
                   
