@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ImageUpload } from '@/components/ImageUpload';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Save } from 'lucide-react';
 
@@ -19,7 +20,8 @@ export default function CreateBlog() {
     title: '',
     content: '',
     excerpt: '',
-    tags: ''
+    tags: '',
+    cover_image_url: ''
   });
 
   if (loading) {
@@ -49,6 +51,7 @@ export default function CreateBlog() {
         author_id: profile?.id,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean),
         reading_time: Math.ceil(formData.content.split(' ').length / 200),
+        cover_image_url: formData.cover_image_url || null,
       };
 
       const { error } = await supabase.from('blogs').insert(blogData);
@@ -95,6 +98,15 @@ export default function CreateBlog() {
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
                 className="text-xl font-semibold border-0 px-0 focus-visible:ring-0"
                 required
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium mb-2 block">Cover Image</label>
+              <ImageUpload
+                onImageUploaded={(url) => setFormData({...formData, cover_image_url: url})}
+                currentImageUrl={formData.cover_image_url}
+                onImageRemoved={() => setFormData({...formData, cover_image_url: ''})}
               />
             </div>
 
