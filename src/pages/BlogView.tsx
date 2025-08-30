@@ -8,9 +8,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Heart, MessageCircle, Eye, Clock, Share2 } from 'lucide-react';
+import { ArrowLeft, Heart, MessageCircle, Eye, Clock, Share2, Sparkles } from 'lucide-react';
 import { CommentSection } from '@/components/CommentSection';
 import { format } from 'date-fns';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 interface Blog {
   id: string;
@@ -43,6 +44,8 @@ export default function BlogView() {
   const [loading, setLoading] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
+  const [summary, setSummary] = useState<string>('');
+  const [summaryLoading, setSummaryLoading] = useState(false);
 
   useEffect(() => {
     fetchBlog();
@@ -164,6 +167,31 @@ export default function BlogView() {
     }
   };
 
+  const handleSummarize = async () => {
+    if (!blog) return;
+    
+    setSummaryLoading(true);
+    try {
+      const response = await supabase.functions.invoke('summarize-article', {
+        body: { content: blog.content }
+      });
+
+      if (response.error) {
+        throw response.error;
+      }
+
+      setSummary(response.data.summary);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: "Failed to generate summary.",
+        variant: "destructive",
+      });
+    } finally {
+      setSummaryLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -272,6 +300,42 @@ export default function BlogView() {
         <div className="whitespace-pre-wrap leading-relaxed">
           {blog.content}
         </div>
+      </div>
+
+      {/* Summarize Button */}
+      <div className="mb-8 flex justify-center">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button 
+              variant="outline" 
+              onClick={handleSummarize}
+              disabled={summaryLoading}
+              className="flex items-center gap-2"
+            >
+              <Sparkles className="w-4 h-4" />
+              {summaryLoading ? 'Generating Summary...' : 'AI Summary'}
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Article Summary</DialogTitle>
+            </DialogHeader>
+            <div className="mt-4">
+              {summaryLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                  <span className="ml-2 text-muted-foreground">Generating summary...</span>
+                </div>
+              ) : summary ? (
+                <div className="prose prose-sm max-w-none">
+                  <p className="text-foreground leading-relaxed">{summary}</p>
+                </div>
+              ) : (
+                <p className="text-muted-foreground">Click the button above to generate an AI summary of this article.</p>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <Separator className="mb-8" />
