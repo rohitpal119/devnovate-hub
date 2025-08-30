@@ -4,7 +4,7 @@ UPDATE profiles
 SET role = 'admin' 
 WHERE user_id = (
   SELECT id FROM auth.users 
-  WHERE email = 'your-email@domain.com'  -- Replace with your actual email
+  WHERE email = 'rohit180pal@gmail.com'  -- Replace with your actual email
 ) 
 AND role = 'blogger';
 
